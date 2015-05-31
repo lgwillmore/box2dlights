@@ -21,6 +21,8 @@ import com.badlogic.gdx.utils.Disposable;
  * @author kalle_h
  */
 public class RayHandler implements Disposable {
+	
+	
 
 	/** Gamma correction value used if enabled
 	 * TODO: remove final modifier and provide method to change
@@ -96,6 +98,8 @@ public class RayHandler implements Disposable {
 	float x1, x2, y1, y2;
 
 	World world;
+	
+	LightSourceRenderer lightSourceRenderer = new LightSourceRendererNull();
 	
 	/**
 	 * Class constructor specifying the physics world from where collision
@@ -312,6 +316,8 @@ public class RayHandler implements Disposable {
 			Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		}
+		
+		lightSourceRenderer.renderLightSources();
 
 		ShaderProgram shader = customLightShader != null ? customLightShader : lightShader;
 		shader.begin();
@@ -605,5 +611,15 @@ public class RayHandler implements Disposable {
 	public FrameBuffer getLightMapBuffer() {
 		return lightMap.frameBuffer;
 	}
+
+	public LightSourceRenderer getLightSourceRenderer() {
+		return lightSourceRenderer;
+	}
+
+	public void setLightSourceRenderer(LightSourceRenderer lightSourceRenderer) {
+		this.lightSourceRenderer = lightSourceRenderer;
+	}
+	
+	
 	
 }
